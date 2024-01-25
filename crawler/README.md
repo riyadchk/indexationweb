@@ -1,4 +1,4 @@
-# Minimal Web Crawler Project
+# Minimal Web Crawler Project - Riyad Chamekh
 
 ## Overview
 
