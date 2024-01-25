@@ -5,10 +5,25 @@ import time
 import xml.etree.ElementTree as ET
 import sqlite3
 import concurrent.futures
+import os
 
 
 class WebCrawler:
-    def __init__(self, start_url, max_urls=50, max_links_per_page=5):
+    """
+    A web crawler that downloads webpages and stores them in a database.
+
+    Attributes:
+        start_url (str): The URL to start crawling from.
+        visited_urls (set): The URLs that have been visited.
+        urls_to_crawl (list): The URLs that have been found and need to be crawled.
+        crawled_urls (list): The URLs that have been crawled.
+        max_urls (int): The maximum number of URLs to crawl.
+        max_links_per_page (int): The maximum number of links to follow on a page.
+        last_download_time (float): The time of the last download.
+        verbose (bool): Whether to print additional information during the crawling process.
+    """
+
+    def __init__(self, start_url, max_urls=50, max_links_per_page=5, verbose=False):
         self.start_url = start_url
         self.visited_urls = set()
         self.urls_to_crawl = [start_url]
@@ -16,6 +31,12 @@ class WebCrawler:
         self.max_urls = max_urls
         self.max_links_per_page = max_links_per_page
         self.last_download_time = time.time()
+        self.verbose = verbose
+        # delete the database file and the crawled_webpages.txt file if they exist
+        if os.path.exists("webpages.db"):
+            os.remove("webpages.db")
+        if os.path.exists("crawled_webpages.txt"):
+            os.remove("crawled_webpages.txt")
 
     def crawl(self):
         self.read_sitemap(self.start_url)
@@ -44,11 +65,14 @@ class WebCrawler:
                 self.urls_to_crawl.append(elem.text)
         except urllib.error.HTTPError as e:
             print(f"Error reading sitemap: {e}")
+            self.find_links(url)
 
     def can_crawl(self, url):
         rp = RobotFileParser()
         rp.set_url(urllib.parse.urljoin(url, "/robots.txt"))
         rp.read()
+        if self.verbose:
+            print(f"Can crawl {url}: {rp.can_fetch('*', url)}")
         return rp.can_fetch("*", url)
 
     def download_and_find_links(self, url):
@@ -60,6 +84,10 @@ class WebCrawler:
             response = urllib.request.urlopen(url)
             if response.getcode() == 200:
                 self.last_download_time = time.time()
+                if self.verbose:
+                    print(
+                        f"Downloading page {url} by thread {os.getpid()} at time {self.last_download_time}"
+                    )
                 self.store_page_with_new_connection(url)
         except urllib.error.URLError as e:
             print(f"Error downloading page {url}: {e}")
@@ -70,7 +98,7 @@ class WebCrawler:
             cursor = conn.cursor()
             cursor.execute(
                 """CREATE TABLE IF NOT EXISTS webpages
-                   (url text, timestamp real)"""
+                   (url text, age real)"""
             )
             cursor.execute("INSERT INTO webpages VALUES (?, ?)", (url, time.time()))
             conn.commit()
@@ -89,6 +117,8 @@ class WebCrawler:
     def process_links(self, page_content, base_url):
         soup = BeautifulSoup(page_content, "html.parser")
         links = soup.find_all("a")
+        if self.verbose:
+            print(f"Found {len(links)} links on page {base_url}")
         count = 0
         for link in links:
             if count >= self.max_links_per_page:
