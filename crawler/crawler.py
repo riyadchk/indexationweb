@@ -6,6 +6,7 @@ import xml.etree.ElementTree as ET
 import sqlite3
 import concurrent.futures
 import os
+import threading  # Import the threading module for lock synchronization
 
 
 class WebCrawler:
@@ -32,7 +33,9 @@ class WebCrawler:
         self.max_links_per_page = max_links_per_page
         self.last_download_time = time.time()
         self.verbose = verbose
-        # delete the database file and the crawled_webpages.txt file if they exist
+        # Create a lock for thread synchronization
+        self.lock = threading.Lock()
+        # Delete the database file and the crawled_webpages.txt file if they exist
         if os.path.exists("crawler/webpages.db"):
             os.remove("crawler/webpages.db")
         if os.path.exists("crawler/crawled_webpages.txt"):
@@ -50,11 +53,12 @@ class WebCrawler:
 
     def get_next_url(self):
         if self.urls_to_crawl:
-            url = self.urls_to_crawl.pop(0)
-            if url not in self.visited_urls:
-                self.visited_urls.add(url)
-                self.crawled_urls.append(url)
-                return url
+            with self.lock:
+                url = self.urls_to_crawl.pop(0)
+                if url not in self.visited_urls:
+                    self.visited_urls.add(url)
+                    self.crawled_urls.append(url)
+                    return url
         return None
 
     def read_sitemap(self, url):
@@ -130,9 +134,10 @@ class WebCrawler:
 
     def add_url_to_crawl(self, url):
         if url not in self.visited_urls:
-            if self.can_crawl(url):
-                self.urls_to_crawl.append(url)
-                return True
+            with self.lock:
+                if self.can_crawl(url):
+                    self.urls_to_crawl.append(url)
+                    return True
         return False
 
     def write_crawled_urls(self):
