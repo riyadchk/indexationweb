@@ -33,10 +33,10 @@ class WebCrawler:
         self.last_download_time = time.time()
         self.verbose = verbose
         # delete the database file and the crawled_webpages.txt file if they exist
-        if os.path.exists("webpages.db"):
-            os.remove("webpages.db")
-        if os.path.exists("crawled_webpages.txt"):
-            os.remove("crawled_webpages.txt")
+        if os.path.exists("crawler/webpages.db"):
+            os.remove("crawler/webpages.db")
+        if os.path.exists("crawler/crawled_webpages.txt"):
+            os.remove("crawler/crawled_webpages.txt")
 
     def crawl(self):
         self.read_sitemap(self.start_url)
@@ -94,7 +94,7 @@ class WebCrawler:
 
     def store_page_with_new_connection(self, url):
         try:
-            conn = sqlite3.connect("webpages.db")
+            conn = sqlite3.connect("crawler/webpages.db")
             cursor = conn.cursor()
             cursor.execute(
                 """CREATE TABLE IF NOT EXISTS webpages
@@ -136,6 +136,6 @@ class WebCrawler:
         return False
 
     def write_crawled_urls(self):
-        with open("crawled_webpages.txt", "w") as file:
+        with open("crawler/crawled_webpages.txt", "w") as file:
             for url in self.crawled_urls:
                 file.write(url + "\n")
