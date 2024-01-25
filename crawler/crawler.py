@@ -95,14 +95,15 @@ class WebCrawler:
                 break
             href = link.get("href")
             if href and href.startswith("http"):
-                self.add_url_to_crawl(href)
-                print(f"Found link: {href}")
-                print(len(self.urls_to_crawl))
-                count += 1
+                can_crawl = self.add_url_to_crawl(href)
+                count += 1 if can_crawl else 0
 
     def add_url_to_crawl(self, url):
         if url not in self.visited_urls:
-            self.urls_to_crawl.append(url)
+            if self.can_crawl(url):
+                self.urls_to_crawl.append(url)
+                return True
+        return False
 
     def write_crawled_urls(self):
         with open("crawled_webpages.txt", "w") as file:
