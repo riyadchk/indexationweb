@@ -7,6 +7,7 @@ import sqlite3
 import concurrent.futures
 import os
 import threading
+import queue
 
 
 class WebCrawler:
@@ -26,7 +27,8 @@ class WebCrawler:
         """
         self.start_url = start_url
         self.visited_urls = set()
-        self.urls_to_crawl = [start_url]
+        self.urls_to_crawl = queue.Queue()
+        self.urls_to_crawl.put(start_url)
         self.crawled_urls = []
         self.max_urls = max_urls
         self.max_links_per_page = max_links_per_page
@@ -63,9 +65,9 @@ class WebCrawler:
         Returns:
             str: The next URL to crawl.
         """
-        if self.urls_to_crawl:
+        if not self.urls_to_crawl.empty():
             with self.lock:
-                url = self.urls_to_crawl.pop(0)
+                url = self.urls_to_crawl.get()
                 if url not in self.visited_urls:
                     self.visited_urls.add(url)
                     self.crawled_urls.append(url)
@@ -203,7 +205,7 @@ class WebCrawler:
         if url not in self.visited_urls:
             with self.lock:
                 if self.can_crawl(url):
-                    self.urls_to_crawl.append(url)
+                    self.urls_to_crawl.put(url)
                     return True
         return False
 
