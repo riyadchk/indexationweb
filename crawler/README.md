@@ -1,7 +1,5 @@
 # Minimal Web Crawler Project
 
-## *Riyad Chamekh*
-
 ## Overview
 
 This Web Crawler is a Python-based tool designed to crawl websites, starting from a given URL. It systematically browses the web and stores crawled URLs in a database, following specific constraints like maximum number of URLs to crawl and maximum number of links per page.
@@ -56,3 +54,7 @@ You can configure the crawler by modifying the parameters in `main.py`:
 - `main.py`: The entry point of the program, where you can set the starting URL and other parameters.
 - `webpages.db`: SQLite database file where crawled URLs are stored.
 - `crawled_webpages.txt`: A text file containing the list of crawled URLs.
+
+## Contributors
+
+- Riyad Chamekh
