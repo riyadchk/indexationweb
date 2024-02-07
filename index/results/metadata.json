@@ -1,0 +1,12 @@
+{
+    "total_documents": 13550,
+    "total_tokens": 6883326,
+    "tokens_per_field": {
+        "titles": 151507,
+        "contents": 6630710,
+        "h1s": 101109
+    },
+    "average_tokens_per_document": 507.99453874538744,
+    "average_tokens_per_titel": 11.181328413284133,
+    "erreur_count": 13548
+}
