@@ -35,7 +35,7 @@ class StatisticsCalculator:
             "total_tokens": total_tokens,
             "tokens_per_field": tokens_per_field,
             "average_tokens_per_document": average_tokens_per_document,
-            "average_tokens_per_titel": average_token_per_title,
+            "average_tokens_per_title": average_token_per_title,
             "erreur_count": erreur_count,
         }
 

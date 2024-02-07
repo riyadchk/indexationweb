@@ -24,4 +24,4 @@ class IndexBuilder:
 
     def save_index(self, index, file_name):
         with open(file_name, "w", encoding="utf-8") as f:
-            json.dump(index, f, indent=4)
+            json.dump(index, f, indent=4, ensure_ascii=False)
