@@ -34,11 +34,10 @@ The project is structured as follows:
 
 - `main.py`: The main script that orchestrates the index construction process and accepts a `-v` or `--verbose` argument to display progress.
 - `url_loader.py`: Loads URLs from a JSON file.
-- `html_title_extractor.py`: Extracts titles from HTML pages.
 - `tokenizer.py`: Tokenizes the extracted titles.
 - `stemmer.py`: Applies stemming to the tokens.
 - `index_builder.py`: Builds the non-positional and positional indexes.
-- `statistics.py`: Calculates and records statistics on the documents and tokens.
+- `statistics_calculator.py`: Calculates and records statistics on the documents and tokens.
 
 ## Usage
 
