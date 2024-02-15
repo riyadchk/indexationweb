@@ -43,3 +43,8 @@ index/utils/__pycache__/stemmer.cpython-311.pyc
 index/utils/__pycache__/tokenizer.cpython-311.pyc
 index/data/TP2.pdf
 index/data/index.json
+index/__pycache__/__init__.cpython-310.pyc
+index/utils/__pycache__/__init__.cpython-310.pyc
+index/utils/__pycache__/stemmer.cpython-310.pyc
+index/utils/__pycache__/tokenizer.cpython-310.pyc
+ranker/__pycache__/ranker.cpython-310.pyc
