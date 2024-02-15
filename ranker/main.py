@@ -8,5 +8,9 @@ if __name__ == "__main__":
     parser.add_argument("query", type=str, help="The query to rank the documents")
     args = parser.parse_args()
 
-    ranker = Ranker("documents.json", "title_pos_index.json", "content_pos_index.json")
+    ranker = Ranker(
+        "data/documents.json",
+        "data/title_pos_index.json",
+        "data/content_pos_index.json",
+    )
     ranker.run(args.query)

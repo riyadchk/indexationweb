@@ -51,7 +51,9 @@ class Ranker:
         sorted_documents = sorted(rankings.items(), key=lambda x: x[1], reverse=True)
         return sorted_documents
 
-    def generate_results_json(self, sorted_documents, output_file="results.json"):
+    def generate_results_json(
+        self, sorted_documents, output_file="results/results.json"
+    ):
         results = []
 
         for doc_id, score in sorted_documents:

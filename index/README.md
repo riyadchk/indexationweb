@@ -1,5 +1,3 @@
-### README.md
-
 # Index Construction Project
 
 This Python project is designed to construct a minimal index from a provided list of URLs by extracting page titles, tokenizing them, and building three types of indexes: a non-positional index, a non-positional index with stemming, and a positional index with stemming. It also features an option to display the progress of each step.
@@ -7,7 +5,7 @@ This Python project is designed to construct a minimal index from a provided lis
 ## Dependencies
 
 This project requires the following libraries:
-- BeautifulSoup4 for HTML parsing.
+
 - NLTK for tokenizing and stemming.
 - Requests for fetching HTML content from URLs.
 
@@ -33,7 +31,6 @@ nltk.download('punkt')
 The project is structured as follows:
 
 - `main.py`: The main script that orchestrates the index construction process and accepts a `-v` or `--verbose` argument to display progress.
-- `url_loader.py`: Loads URLs from a JSON file.
 - `tokenizer.py`: Tokenizes the extracted titles.
 - `stemmer.py`: Applies stemming to the tokens.
 - `index_builder.py`: Builds the non-positional and positional indexes.
@@ -55,7 +52,7 @@ python main.py --verbose
 
 ## Generated Files
 
-After execution, the script generates the following files in the current directory:
+After execution, the script generates the following files in the results directory:
 
 - `title.non_pos_index.json`: The non-positional index.
 - `mon_stemmer.title.non_pos_index.json`: The non-positional index with stemming.
@@ -63,4 +60,5 @@ After execution, the script generates the following files in the current directo
 - `metadata.json`: The statistics calculated on documents and tokens.
 
 ## Contributors
+
 - Riyad Chamekh
