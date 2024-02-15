@@ -25,3 +25,21 @@ secrets.txt
 # Ignore cache files
 ./index/__pycache__/
 
+index/__pycache__/html_title_extractor.cpython-310.pyc
+index/__pycache__/html_title_extractor.cpython-311.pyc
+index/__pycache__/index_builder.cpython-310.pyc
+index/__pycache__/index_builder.cpython-311.pyc
+index/__pycache__/statistics_calculator.cpython-310.pyc
+index/__pycache__/statistics_calculator.cpython-311.pyc
+index/__pycache__/stemmer.cpython-311.pyc
+index/__pycache__/stemmer.cpython-310.pyc
+index/__pycache__/tokenizer.cpython-310.pyc
+index/__pycache__/tokenizer.cpython-311.pyc
+index/__pycache__/url_loader.cpython-310.pyc
+index/__pycache__/url_loader.cpython-311.pyc
+index/utils/__pycache__/index_builder.cpython-311.pyc
+index/utils/__pycache__/statistics_calculator.cpython-311.pyc
+index/utils/__pycache__/stemmer.cpython-311.pyc
+index/utils/__pycache__/tokenizer.cpython-311.pyc
+index/data/TP2.pdf
+index/data/index.json
